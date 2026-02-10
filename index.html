@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@300;400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rose: #ff6b9d;
+            --deep-rose: #c44569;
+            --blush: #ffc3d5;
+            --cream: #fff5f7;
+            --gold: #ffd700;
+            --shadow: rgba(196, 69, 105, 0.3);
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            overflow: hidden;
+            background: #1a0a1e;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        /* 3D Animated Background */
+        .bg-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-sphere {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            filter: blur(80px);
+            animation: float3D 20s infinite ease-in-out;
+        }
+
+        .sphere-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #ff6b9d, #f093fb);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .sphere-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .sphere-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #feca57, #ff9ff3);
+            bottom: 10%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float3D {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) rotate3d(1, 1, 0, 0deg);
+            }
+            25% {
+                transform: translate3d(100px, -100px, 100px) rotate3d(1, 1, 0, 90deg);
+            }
+            50% {
+                transform: translate3d(-50px, 100px, -50px) rotate3d(1, 1, 0, 180deg);
+            }
+            75% {
+                transform: translate3d(150px, 50px, 150px) rotate3d(1, 1, 0, 270deg);
+            }
+        }
+
+        /* 3D Rotating Grid Background */
+        .grid-3d {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            transform-style: preserve-3d;
+            transform: translate(-50%, -50%) rotateX(60deg);
+            animation: rotateGrid 30s linear infinite;
+        }
+
+        @keyframes rotateGrid {
+            from { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg); }
+            to { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg); }
+        }
+
+        .grid-line {
+            position: absolute;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 107, 157, 0.3) 50%, 
+                transparent 100%);
+            height: 2px;
+            width: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .grid-line:nth-child(odd) {
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(118, 75, 162, 0.3) 50%, 
+                transparent 100%);
+        }
+
+        /* Floating hearts background */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatUp 8s infinite ease-in;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) translateZ(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateZ(200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 3D Flowers */
+        .flower {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0;
+            animation: floatFlower 12s infinite ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes floatFlower {
+            0% {
+                transform: translateY(100vh) translateZ(0px) rotateY(0deg) rotateX(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateZ(300px) rotateY(720deg) rotateX(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Flower petals - creating a 3D rose */
+        .flower-rose {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotateZ(0deg); }
+            to { transform: rotateZ(360deg); }
+        }
+
+        .petal {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: linear-gradient(135deg, #ff6b9d, #ff1744);
+            border-radius: 50% 50% 50% 0;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 100%;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.6);
+        }
+
+        .petal:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-15px); }
+        .petal:nth-child(2) { transform: translate(-50%, -50%) rotate(72deg) translateY(-15px); }
+        .petal:nth-child(3) { transform: translate(-50%, -50%) rotate(144deg) translateY(-15px); }
+        .petal:nth-child(4) { transform: translate(-50%, -50%) rotate(216deg) translateY(-15px); }
+        .petal:nth-child(5) { transform: translate(-50%, -50%) rotate(288deg) translateY(-15px); }
+
+        .flower-center {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #ffd700, #ff9800);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Tulip flower */
+        .flower-tulip {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .tulip-petal {
+            position: absolute;
+            width: 25px;
+            height: 40px;
+            background: linear-gradient(180deg, #ff6b9d, #c44569);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: 50%;
+            left: 50%;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.5);
+        }
+
+        .tulip-petal:nth-child(1) { 
+            transform: translate(-50%, -50%) translateZ(10px);
+        }
+        .tulip-petal:nth-child(2) { 
+            transform: translate(-50%, -50%) rotateY(60deg) translateZ(10px);
+        }
+        .tulip-petal:nth-child(3) { 
+            transform: translate(-50%, -50%) rotateY(120deg) translateZ(10px);
+        }
+        .tulip-petal:nth-child(4) { 
+            transform: translate(-50%, -50%) rotateY(180deg) translateZ(10px);
+        }
+        .tulip-petal:nth-child(5) { 
+            transform: translate(-50%, -50%) rotateY(240deg) translateZ(10px);
+        }
+        .tulip-petal:nth-child(6) { 
+            transform: translate(-50%, -50%) rotateY(300deg) translateZ(10px);
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 60px 80px;
+            box-shadow: 0 25px 80px var(--shadow),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: containerFloat 3s ease-in-out infinite;
+            max-width: 90vw;
+            overflow: visible;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* 3D Teddy Bear */
+        .teddy-bear {
+            width: 200px;
+            height: 220px;
+            margin: 0 auto 20px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: teddyFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes teddyFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotateY(0deg);
+            }
+            25% { 
+                transform: translateY(-15px) rotateY(10deg);
+            }
+            50% { 
+                transform: translateY(0px) rotateY(0deg);
+            }
+            75% { 
+                transform: translateY(-10px) rotateY(-10deg);
+            }
+        }
+
+        /* Teddy Head */
+        .teddy-head {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.3),
+                        0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Ears */
+        .teddy-ear {
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, #A0522D, #8B4513);
+            border-radius: 50%;
+            position: absolute;
+            top: -5px;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3);
+        }
+
+        .teddy-ear.left {
+            left: -15px;
+        }
+
+        .teddy-ear.right {
+            right: -15px;
+        }
+
+        /* Inner ear */
+        .teddy-ear::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #D2691E;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Eyes */
+        .teddy-eye {
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 28px;
+            box-shadow: 0 0 5px rgba(255,255,255,0.5);
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 96%, 100% { transform: scaleY(1); }
+            98% { transform: scaleY(0.1); }
+        }
+
+        .teddy-eye.left {
+            left: 20px;
+        }
+
+        .teddy-eye.right {
+            right: 20px;
+        }
+
+        /* Nose */
+        .teddy-nose {
+            width: 18px;
+            height: 12px;
+            background: linear-gradient(135deg, #000, #333);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Mouth */
+        .teddy-mouth {
+            width: 30px;
+            height: 15px;
+            border: 3px solid #000;
+            border-top: none;
+            border-radius: 0 0 50% 50%;
+            position: absolute;
+            top: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Body */
+        .teddy-body {
+            width: 100px;
+            height: 90px;
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: inset -15px -15px 30px rgba(0,0,0,0.3),
+                        0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Belly */
+        .teddy-belly {
+            width: 50px;
+            height: 60px;
+            background: radial-gradient(circle, #D2691E, #CD853F);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Heart on belly */
+        .teddy-heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            animation: heartBeat 1.5s infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Arms */
+        .teddy-arm {
+            width: 35px;
+            height: 70px;
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            position: absolute;
+            top: 75px;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.3),
+                        0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .teddy-arm.left {
+            left: 15px;
+            transform: rotate(-20deg);
+            animation: waveLeft 2s ease-in-out infinite;
+        }
+
+        .teddy-arm.right {
+            right: 15px;
+            transform: rotate(20deg);
+            animation: waveRight 2s ease-in-out infinite;
+        }
+
+        @keyframes waveLeft {
+            0%, 100% { transform: rotate(-20deg); }
+            50% { transform: rotate(-40deg); }
+        }
+
+        @keyframes waveRight {
+            0%, 100% { transform: rotate(20deg); }
+            50% { transform: rotate(40deg); }
+        }
+
+        /* Paws */
+        .teddy-paw {
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, #D2691E, #CD853F);
+            border-radius: 50%;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Legs */
+        .teddy-leg {
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            position: absolute;
+            top: 145px;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.3),
+                        0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .teddy-leg.left {
+            left: 45px;
+        }
+
+        .teddy-leg.right {
+            right: 45px;
+        }
+
+        /* Feet */
+        .teddy-foot {
+            width: 30px;
+            height: 25px;
+            background: radial-gradient(circle, #D2691E, #CD853F);
+            border-radius: 50%;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Red Dress */
+        .teddy-dress {
+            width: 110px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff1744, #ff6b9d);
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+            box-shadow: 0 5px 20px rgba(255, 23, 68, 0.5);
+            z-index: 1;
+        }
+
+        /* Dress ruffle effect */
+        .teddy-dress::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.3) 75%,
+                transparent 100%);
+        }
+
+        /* Dress bow */
+        .dress-bow {
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(135deg, #ffd700, #feca57);
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Animated doll/character */
+        .character {
+            font-size: 120px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: characterDance 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+            position: relative;
+        }
+
+        @keyframes characterDance {
+            0%, 100% { 
+                transform: translateY(0) rotate(-5deg);
+            }
+            25% { 
+                transform: translateY(-15px) rotate(5deg) scale(1.05);
+            }
+            50% { 
+                transform: translateY(0) rotate(-5deg);
+            }
+            75% { 
+                transform: translateY(-10px) rotate(3deg) scale(1.02);
+            }
+        }
+
+        /* Floating hearts around character */
+        .character::before,
+        .character::after {
+            content: '💕';
+            position: absolute;
+            font-size: 30px;
+            animation: orbitHeart 3s infinite ease-in-out;
+        }
+
+        .character::before {
+            left: -50px;
+            top: 20px;
+        }
+
+        .character::after {
+            right: -50px;
+            top: 20px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes orbitHeart {
+            0%, 100% { 
+                transform: translateY(0) scale(1);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translateY(-20px) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #fff, var(--blush), var(--rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: titleGlow 2s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--cream);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Buttons container */
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding: 20px 60px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            color: white;
+            position: absolute;
+        }
+
+        .no-btn:hover {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        /* Success overlay */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.95), rgba(196, 69, 105, 0.95));
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease;
+            overflow: hidden;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        /* 3D Background for success overlay */
+        .success-bg-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .success-sphere {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            filter: blur(100px);
+            animation: float3D 15s infinite ease-in-out;
+        }
+
+        .success-sphere-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #fff, #ffc3d5);
+            top: 20%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .success-sphere-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #ff6b9d, #ff1744);
+            bottom: 10%;
+            right: 5%;
+            animation-delay: 5s;
+        }
+
+        .success-sphere-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #ffd700, #feca57);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        .success-grid-3d {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            transform-style: preserve-3d;
+            transform: translate(-50%, -50%) rotateX(60deg);
+            animation: rotateGrid 25s linear infinite;
+            opacity: 0.3;
+        }
+
+        .success-hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-content {
+            text-align: center;
+            color: white;
+            animation: scaleIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes scaleIn {
+            from { 
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            to { 
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .success-content .emoji {
+            font-size: 150px;
+            margin-bottom: 30px;
+            display: inline-block;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .success-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .success-content p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+        }
+
+        /* Form styles */
+        .contact-form {
+            margin-top: 40px;
+            display: none;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .contact-form.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            text-align: left;
+            color: white;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, white, #ffc3d5);
+            color: #c44569;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.5);
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .teddy-bear {
+                width: 150px;
+                height: 165px;
+                transform: scale(0.8);
+            }
+            
+            button {
+                font-size: 1.3rem;
+                padding: 15px 40px;
+            }
+
+            .success-content h2 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Background -->
+    <div class="bg-3d">
+        <div class="bg-sphere sphere-1"></div>
+        <div class="bg-sphere sphere-2"></div>
+        <div class="bg-sphere sphere-3"></div>
+        <div class="grid-3d" id="grid3d"></div>
+    </div>
+
+    <!-- Floating hearts and flowers -->
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <!-- Main content -->
+    <div class="container">
+        <!-- 3D Teddy Bear with Red Dress -->
+        <div class="teddy-bear">
+            <!-- Head -->
+            <div class="teddy-head">
+                <div class="teddy-ear left"></div>
+                <div class="teddy-ear right"></div>
+                <div class="teddy-eye left"></div>
+                <div class="teddy-eye right"></div>
+                <div class="teddy-nose"></div>
+                <div class="teddy-mouth"></div>
+            </div>
+            
+            <!-- Body -->
+            <div class="teddy-body">
+                <div class="teddy-belly">
+                    <div class="teddy-heart">❤️</div>
+                </div>
+            </div>
+            
+            <!-- Red Dress -->
+            <div class="teddy-dress">
+                <div class="dress-bow"></div>
+            </div>
+            
+            <!-- Arms -->
+            <div class="teddy-arm left">
+                <div class="teddy-paw"></div>
+            </div>
+            <div class="teddy-arm right">
+                <div class="teddy-paw"></div>
+            </div>
+            
+            <!-- Legs -->
+            <div class="teddy-leg left">
+                <div class="teddy-foot"></div>
+            </div>
+            <div class="teddy-leg right">
+                <div class="teddy-foot"></div>
+            </div>
+        </div>
+
+        <h1>Will You Be</h1>
+        <h1>My Valentine?</h1>
+        <p class="subtitle">Make my heart complete ✨</p>
+        
+        <div class="buttons">
+            <button class="yes-btn" onclick="handleYes()">
+                <span style="position: relative; z-index: 1;">Yes! 💖</span>
+            </button>
+            <button class="no-btn" id="noBtn" onmouseover="runAway()" ontouchstart="runAway()">
+                <span style="position: relative; z-index: 1;">No 😢</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Success overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <!-- 3D Background for success screen -->
+        <div class="success-bg-3d">
+            <div class="success-sphere success-sphere-1"></div>
+            <div class="success-sphere success-sphere-2"></div>
+            <div class="success-sphere success-sphere-3"></div>
+            <div class="success-grid-3d" id="successGrid3d"></div>
+        </div>
+        <div class="success-hearts-container" id="successHeartsContainer"></div>
+
+        <div class="success-content">
+            <div class="emoji">💕🎉💖</div>
+            <h2>Yaaay!</h2>
+            <p>You've made me the happiest! 💗</p>
+            <p style="margin-top: 20px; font-size: 1.8rem;">Can't wait for our Valentine's Day! 🌹</p>
+            
+            <div class="contact-form" id="contactForm">
+                <div class="form-container">
+                    <p style="font-size: 1.5rem; margin-bottom: 30px;">Share your details so we can plan our special day! 💖</p>
+                    <div class="form-group">
+                        <label>Your Beautiful Name ✨</label>
+                        <input type="text" id="userName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Your Number 📱</label>
+                        <input type="tel" id="userPhone" placeholder="Enter your phone number" required>
+                    </div>
+                    <button class="submit-btn" onclick="sendDetails()">Send My Info 💌</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create 3D grid
+        function create3DGrid() {
+            const grid = document.getElementById('grid3d');
+            for (let i = 0; i < 30; i++) {
+                const line = document.createElement('div');
+                line.className = 'grid-line';
+                line.style.top = (i * 50) + 'px';
+                grid.appendChild(line);
+            }
+        }
+
+        // Create floating hearts and flowers
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘'];
+            
+            // Create hearts
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    container.appendChild(heart);
+                }, i * 200);
+            }
+
+            // Create 3D flowers
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.className = 'flower';
+                    flower.style.left = Math.random() * 100 + '%';
+                    flower.style.animationDuration = (Math.random() * 8 + 10) + 's';
+                    flower.style.animationDelay = Math.random() * 8 + 's';
+                    
+                    // Randomly choose between rose and tulip
+                    if (Math.random() > 0.5) {
+                        // Create rose
+                        const rose = document.createElement('div');
+                        rose.className = 'flower-rose';
+                        for (let j = 0; j < 5; j++) {
+                            const petal = document.createElement('div');
+                            petal.className = 'petal';
+                            rose.appendChild(petal);
+                        }
+                        const center = document.createElement('div');
+                        center.className = 'flower-center';
+                        rose.appendChild(center);
+                        flower.appendChild(rose);
+                    } else {
+                        // Create tulip
+                        const tulip = document.createElement('div');
+                        tulip.className = 'flower-tulip';
+                        for (let j = 0; j < 6; j++) {
+                            const petal = document.createElement('div');
+                            petal.className = 'tulip-petal';
+                            tulip.appendChild(petal);
+                        }
+                        flower.appendChild(tulip);
+                    }
+                    
+                    container.appendChild(flower);
+                }, i * 300);
+            }
+        }
+
+        // Create sparkles
+        function createSparkles() {
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(sparkle);
+            }
+        }
+
+        // Make the No button run away
+        function runAway() {
+            const noBtn = document.getElementById('noBtn');
+            const maxX = window.innerWidth - noBtn.offsetWidth - 40;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 40;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transition = 'all 0.3s ease';
+            
+            // Make Yes button bigger after each escape
+            const yesBtn = document.querySelector('.yes-btn');
+            const currentScale = parseFloat(yesBtn.style.transform?.match(/scale\(([\d.]+)\)/)?.[1] || 1);
+            yesBtn.style.transform = `scale(${currentScale + 0.1})`;
+        }
+
+        // Handle Yes click
+        function handleYes() {
+            const overlay = document.getElementById('successOverlay');
+            overlay.classList.add('show');
+            
+            // Initialize success screen animations
+            createSuccess3DGrid();
+            createSuccessAnimations();
+            
+            // Show form after celebration
+            setTimeout(() => {
+                document.getElementById('contactForm').classList.add('show');
+            }, 3000);
+            
+            // Create explosion of hearts and flowers
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const element = document.createElement('div');
+                    element.style.position = 'fixed';
+                    element.style.left = '50%';
+                    element.style.top = '50%';
+                    element.style.fontSize = '30px';
+                    element.textContent = i % 2 === 0 ? '💖' : '🌹';
+                    element.style.zIndex = '999';
+                    element.style.pointerEvents = 'none';
+                    document.body.appendChild(element);
+                    
+                    const angle = (Math.PI * 2 * i) / 50;
+                    const velocity = 5 + Math.random() * 5;
+                    let x = 0, y = 0;
+                    
+                    const animation = setInterval(() => {
+                        x += Math.cos(angle) * velocity;
+                        y += Math.sin(angle) * velocity;
+                        element.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
+                        element.style.opacity = 1 - (Math.abs(x) + Math.abs(y)) / 500;
+                        
+                        if (Math.abs(x) > 500 || Math.abs(y) > 500) {
+                            clearInterval(animation);
+                            element.remove();
+                        }
+                    }, 20);
+                }, i * 20);
+            }
+        }
+
+        // Create 3D grid for success screen
+        function createSuccess3DGrid() {
+            const grid = document.getElementById('successGrid3d');
+            for (let i = 0; i < 30; i++) {
+                const line = document.createElement('div');
+                line.className = 'grid-line';
+                line.style.top = (i * 50) + 'px';
+                grid.appendChild(line);
+            }
+        }
+
+        // Create animations for success screen
+        function createSuccessAnimations() {
+            const container = document.getElementById('successHeartsContainer');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘', '🌹', '🌺', '🌸'];
+            
+            // Create continuous floating hearts and flowers
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const element = document.createElement('div');
+                    element.className = 'heart';
+                    element.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    element.style.left = Math.random() * 100 + '%';
+                    element.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                    element.style.animationDelay = Math.random() * 5 + 's';
+                    element.style.fontSize = (Math.random() * 25 + 20) + 'px';
+                    container.appendChild(element);
+                }, i * 100);
+            }
+        }
+
+        // Send details via SMS
+        function sendDetails() {
+            const name = document.getElementById('userName').value;
+            const phone = document.getElementById('userPhone').value;
+            
+            if (!name || !phone) {
+                alert('Please fill in both fields! 💝');
+                return;
+            }
+            
+            // REPLACE THIS WITH YOUR PHONE NUMBER
+            const yourPhoneNumber = 'YOUR_PHONE_NUMBER_HERE'; // Format: +1234567890 or just 1234567890
+            
+            // Create SMS message
+            const message = `💖 SHE SAID YES! 💖%0A%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0A%0AYour Valentine accepted! 🌹✨`;
+            
+            // Open SMS app with pre-filled message
+            window.location.href = `sms:${yourPhoneNumber}?&body=${message}`;
+            
+            // Show confirmation
+            setTimeout(() => {
+                alert('Perfect! 💕 Your messaging app should open. Just hit send!');
+            }, 500);
+        }
+
+        // Initialize
+        create3DGrid();
+        createHearts();
+        createSparkles();
+        
+        // Position No button initially
+        const noBtn = document.getElementById('noBtn');
+        noBtn.style.position = 'relative';
+    </script>
+</body>
+</html>
